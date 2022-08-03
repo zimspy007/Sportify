@@ -15,4 +15,5 @@
 
     <color name="colorIconFill">@color/colorPrimaryDark</color>
     <color name="textColorPrimary">@color/colorPrimaryDark</color>
+    <color name="mainBackgroundColor">@color/white</color>
 </resources>

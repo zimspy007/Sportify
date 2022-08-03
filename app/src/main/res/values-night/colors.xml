@@ -2,4 +2,5 @@
 <resources>
     <color name="colorIconFill">#A1A1A1</color>
     <color name="textColorPrimary">@color/colorGreyPrimary</color>
+    <color name="mainBackgroundColor">@color/black</color>
 </resources>
