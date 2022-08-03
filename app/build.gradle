@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
     id 'io.objectbox' // Should be last
 }
 
@@ -76,6 +77,11 @@ dependencies {
     // Kotlin & Java
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
     implementation 'commons-io:commons-io:2.11.0'
+
+    //ObjectBox
+    testImplementation "io.objectbox:objectbox-linux:3.1.2"
+    implementation "io.objectbox:objectbox-android:3.1.2"
+    kapt "io.objectbox:objectbox-processor:3.1.2"
 
     // third party libraries
     implementation 'com.github.bumptech.glide:glide:4.13.2'
