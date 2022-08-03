@@ -1,8 +1,10 @@
 package com.vanlee.sportify.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import com.vanlee.sportify.CustomApplication
 import com.vanlee.sportify.R
 import com.vanlee.sportify.databinding.ActivityMainBinding
@@ -14,6 +16,7 @@ import com.vanlee.sportify.network.NetworkRequests
 import com.vanlee.sportify.network.NetworkRequests.Companion.EVENTS_HTTP_TAG
 import com.vanlee.sportify.network.NetworkRequests.Companion.SCHEDULE_HTTP_TAG
 import com.vanlee.sportify.network.NetworkRequests.Companion.cancelCallWithTag
+import com.vanlee.sportify.viewmodel.EventsViewModel
 import com.zhuinden.simplestack.History
 import com.zhuinden.simplestack.SimpleStateChanger
 import com.zhuinden.simplestack.StateChange
@@ -21,8 +24,14 @@ import com.zhuinden.simplestack.navigator.Navigator
 import com.zhuinden.simplestackextensions.fragments.DefaultFragmentStateChanger
 import com.zhuinden.simplestackextensions.navigatorktx.backstack
 import com.zhuinden.simplestackextensions.services.DefaultServiceProvider
+import kotlinx.coroutines.delay
 import okhttp3.OkHttpClient
 import java.util.*
+import java.util.concurrent.Executors
+import java.util.concurrent.Executors.callable
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.ScheduledFuture
+import java.util.concurrent.TimeUnit
 import kotlin.concurrent.fixedRateTimer
 
 
@@ -36,6 +45,8 @@ class MainActivity : AppCompatActivity(), SimpleStateChanger.NavigationHandler {
     private lateinit var schedulesHttpResponse: HttpResponse
 
     private val client = OkHttpClient()
+
+    private lateinit var schedulesFixedRateTimer: Timer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,14 +80,32 @@ class MainActivity : AppCompatActivity(), SimpleStateChanger.NavigationHandler {
         // Fetch data from server
         Thread {
             eventsHttpResponse = NetworkRequests.getEvents(client)
-            runOnUiThread { }
+            runOnUiThread {
+                if (!eventsHttpResponse.success) {
+                    // Instead of generic error, show the user an error from the server
+                    DynamicToast.makeError(this@MainActivity, getString(R.string.connection_error))
+                        .show()
+                }
+            }
         }.start()
 
         // This is bad system design. Instead, of using a timer, the server
         // should provide a sync system that pushes notifications to users
         // via FCM. This will lessen server load with these unneeded network requests.
-        fixedRateTimer("Schedule updated", true, 0L, (0.5 * (60*1000)).toLong()) {
-                schedulesHttpResponse = NetworkRequests.getSchedules(client)
+
+        schedulesFixedRateTimer = fixedRateTimer(
+            name = "ScheduleUpdateTimer",
+            initialDelay = 0L, period = 30000//*(0.5 * (60 * 1000)).toLong()*//*
+        ) {
+            Log.i(TAG, "ScheduleUpdated")
+            schedulesHttpResponse = NetworkRequests.getSchedules(client)
+            runOnUiThread {
+                if (!schedulesHttpResponse.success) {
+                    // Instead of generic error, show the user an error from the server
+                    DynamicToast.makeError(this@MainActivity, getString(R.string.connection_error))
+                        .show()
+                }
+            }
         }
 
     }
@@ -87,6 +116,9 @@ class MainActivity : AppCompatActivity(), SimpleStateChanger.NavigationHandler {
             // Cancel http requests
             cancelCallWithTag(client, EVENTS_HTTP_TAG)
             cancelCallWithTag(client, SCHEDULE_HTTP_TAG)
+
+            // Cancel schedules updater
+            schedulesFixedRateTimer.cancel()
 
             super.onBackPressed()
         }
@@ -103,5 +135,9 @@ class MainActivity : AppCompatActivity(), SimpleStateChanger.NavigationHandler {
         }
 
         fragmentStateChanger.handleStateChange(stateChange)
+    }
+
+    companion object {
+        val TAG: String = MainActivity::class.java.simpleName
     }
 }
