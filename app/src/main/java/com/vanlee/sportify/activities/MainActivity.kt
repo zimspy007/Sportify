@@ -2,8 +2,6 @@ package com.vanlee.sportify.activities
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.vanlee.sportify.CustomApplication
 import com.vanlee.sportify.R
@@ -30,6 +28,7 @@ class MainActivity : AppCompatActivity(), SimpleStateChanger.NavigationHandler {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var eventsHttpResponse: HttpResponse
+    private lateinit var schedulesHttpResponse: HttpResponse
 
     private val client = OkHttpClient()
 
@@ -65,6 +64,7 @@ class MainActivity : AppCompatActivity(), SimpleStateChanger.NavigationHandler {
         // Fetch data from server
         Thread {
             eventsHttpResponse = NetworkRequests.getEvents(client)
+            schedulesHttpResponse = NetworkRequests.getSchedules(client)
             runOnUiThread { }
         }.start()
 

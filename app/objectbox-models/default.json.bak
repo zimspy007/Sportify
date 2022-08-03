@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:9107040260143464622",
-      "lastPropertyId": "6:7360647922267503701",
+      "lastPropertyId": "9:5859382980632150405",
       "name": "DbEventItem",
       "properties": [
         {
@@ -38,12 +38,81 @@
           "id": "6:7360647922267503701",
           "name": "formattedTime",
           "type": 9
+        },
+        {
+          "id": "7:5395797157677943930",
+          "name": "idRow",
+          "type": 5
+        },
+        {
+          "id": "8:8503594766717220079",
+          "name": "imageUrl",
+          "type": 9
+        },
+        {
+          "id": "9:5859382980632150405",
+          "name": "videoUrl",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:3473737330684904231",
+      "lastPropertyId": "9:185931143798388852",
+      "name": "DbScheduleItem",
+      "properties": [
+        {
+          "id": "1:647237172971384594",
+          "name": "idRow",
+          "type": 5
+        },
+        {
+          "id": "2:6020947724246129146",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:5991396949171180751",
+          "name": "subTitle",
+          "type": 9
+        },
+        {
+          "id": "4:4541215032916534828",
+          "name": "imageUrl",
+          "type": 9
+        },
+        {
+          "id": "5:5736979655466432918",
+          "name": "videoUrl",
+          "type": 9
+        },
+        {
+          "id": "6:2137773151373216275",
+          "name": "rawTime",
+          "type": 9
+        },
+        {
+          "id": "7:7893452261967907832",
+          "name": "formattedDate",
+          "type": 9
+        },
+        {
+          "id": "8:6440153327483934558",
+          "name": "formattedTime",
+          "type": 9
+        },
+        {
+          "id": "9:185931143798388852",
+          "name": "id",
+          "type": 6,
+          "flags": 1
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "1:9107040260143464622",
+  "lastEntityId": "2:3473737330684904231",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

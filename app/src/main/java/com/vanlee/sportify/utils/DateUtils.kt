@@ -3,9 +3,6 @@ package com.vanlee.sportify.utils
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.icu.util.TimeZone
-import android.util.Log
-import com.vanlee.sportify.network.NetworkRequests
-import java.text.ParseException
 import java.util.*
 
 class DateUtils {
