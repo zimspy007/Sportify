@@ -12,6 +12,8 @@
         <entry key="..\:/dev/sigma/sportify/app/src/main/res/layout/fragment_events.xml" value="0.15185185185185185" />
         <entry key="..\:/dev/sigma/sportify/app/src/main/res/layout/fragment_recycler_view.xml" value="0.1796875" />
         <entry key="..\:/dev/sigma/sportify/app/src/main/res/layout/fragment_schedule.xml" value="0.1796875" />
+        <entry key="..\:/dev/sigma/sportify/app/src/main/res/layout/recycler_item_event.xml" value="0.1796875" />
+        <entry key="..\:/dev/sigma/sportify/app/src/main/res/layout/recycler_item_schedule.xml" value="0.17864583333333334" />
         <entry key="..\:/dev/sigma/sportify/app/src/main/res/menu/navigation.xml" value="0.15185185185185185" />
       </map>
     </option>
