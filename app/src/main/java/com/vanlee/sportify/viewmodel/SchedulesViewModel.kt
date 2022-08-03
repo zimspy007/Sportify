@@ -7,35 +7,48 @@ import androidx.lifecycle.viewModelScope
 import com.vanlee.sportify.database.objectbox.ObjectBox
 import com.vanlee.sportify.database.objectbox.entities.DbScheduleItem
 import com.vanlee.sportify.database.objectbox.entities.DbScheduleItem_
+import io.objectbox.android.AndroidScheduler
+import io.objectbox.query.Query
+import io.objectbox.reactive.DataSubscription
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SchedulesViewModel : ViewModel() {
-    private val events: MutableLiveData<List<DbScheduleItem>> by lazy {
+    private val schedules: MutableLiveData<List<DbScheduleItem>> by lazy {
         MutableLiveData<List<DbScheduleItem>>()
     }
 
+    private lateinit var subscription: DataSubscription
+
     fun loadSchedules() {
-        viewModelScope.launch() {
+        viewModelScope.launch {
             doLoadSchedules()
         }
     }
 
     private suspend fun doLoadSchedules() {
         withContext(Dispatchers.IO) {
-            val query = ObjectBox.store.boxFor(DbScheduleItem::class.java)
-                .query()
-                .order(DbScheduleItem_.rawTime)
-                .build()
+            val schedulesBox = ObjectBox.store.boxFor(DbScheduleItem::class.java)
 
-            events.postValue(query.find())
+            val query: Query<DbScheduleItem> =
+                schedulesBox.query().order(DbScheduleItem_.rawTime).build()
+
+            subscription = query.subscribe()
+                .on(AndroidScheduler.mainThread())
+                .observer { data -> schedules.postValue(data) }
         }
     }
 
-    fun getSchedules(): LiveData<List<DbScheduleItem>> = events
+    fun getSchedules(): LiveData<List<DbScheduleItem>> = schedules
+
+    override fun onCleared() {
+        subscription.cancel()
+
+        super.onCleared()
+    }
 
     companion object {
-        private val TAG = SchedulesViewModel::class.java.simpleName
+        val TAG: String = SchedulesViewModel::class.java.simpleName
     }
 }
