@@ -47,10 +47,21 @@ class DateUtils {
 
         fun isTomorrow(dateString: String): Boolean {
             val twoDaysLater: ZonedDateTime =
-                Instant.now().atZone(ZoneId.systemDefault()).plus(2, ChronoUnit.DAYS)
+                Instant.now().atZone(ZoneId.systemDefault()).plusDays(2)
 
             val instant = convertedDateToLocalTime(dateString)!!.time.toInstant()
             if (instant.isAfter(Instant.now()) && instant.isBefore(twoDaysLater.toInstant())) {
+                return true
+            }
+            return false
+        }
+
+        fun isYesterday(dateString: String): Boolean {
+            val twoDaysAgo: ZonedDateTime =
+                Instant.now().atZone(ZoneId.systemDefault()).minusDays(2)
+
+            val instant = convertedDateToLocalTime(dateString)!!.time.toInstant()
+            if (instant.isBefore(Instant.now()) && instant.isAfter(twoDaysAgo.toInstant())) {
                 return true
             }
             return false

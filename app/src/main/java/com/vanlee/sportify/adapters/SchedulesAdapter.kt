@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.vanlee.sportify.R
 import com.vanlee.sportify.database.objectbox.entities.DbScheduleItem
 import com.vanlee.sportify.databinding.RecyclerItemEventBinding
 import com.vanlee.sportify.utils.DateUtils.Companion.convertedDateToLocalTime
@@ -40,12 +41,10 @@ class SchedulesAdapter(
 
                 val calendar = convertedDateToLocalTime(this.rawTime)
                 if (calendar != null) {
-                    if (DateUtils.isToday(calendar.time.time)) {
-                        binding.time.text = this.formattedTime
-                    } else {
-                        val dateTime = this.formattedDate + ", " + this.formattedTime
-                        binding.time.text = dateTime
-                    }
+
+                    val dateTime = context.getString(R.string.tomorrow) + ", " + this.formattedTime
+                    binding.time.text = dateTime
+
                 } else {
                     val dateTime = this.formattedDate + ", " + this.formattedTime
                     binding.time.text = dateTime
