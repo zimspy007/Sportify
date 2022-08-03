@@ -49,6 +49,14 @@ android {
     }
 }
 
+repositories {
+
+    maven {
+        url "https://jitpack.io"
+    }
+
+}
+
 dependencies {
     // Do not update desugaring library yet
     // It breaks desugaring
@@ -70,28 +78,31 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation "androidx.multidex:multidex:2.0.1"
     implementation "androidx.paging:paging-runtime-ktx:3.1.1"
+    implementation "androidx.lifecycle:lifecycle-process:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
 
     // Google & material
-    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.google.code.gson:gson:2.9.1'
 
     // Kotlin & Java
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
-    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'commons-io:commons-io:20030203.000550'
 
     //ObjectBox
-    testImplementation "io.objectbox:objectbox-linux:3.1.2"
-    implementation "io.objectbox:objectbox-android:3.1.2"
-    kapt "io.objectbox:objectbox-processor:3.1.2"
+    testImplementation 'io.objectbox:objectbox-linux:3.2.1'
+    implementation 'io.objectbox:objectbox-android:3.2.1'
+    kapt 'io.objectbox:objectbox-processor:3.2.1'
 
     // third party libraries
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     implementation 'com.github.bumptech.glide:glide:4.13.2'
     kapt 'com.github.bumptech.glide:compiler:4.13.2'
-    implementation 'com.pranavpandey.android:dynamic-toasts:4.1.0'
-    implementation 'com.pranavpandey.android:dynamic-utils:4.4.1'
+    implementation 'com.pranavpandey.android:dynamic-toasts:4.1.2'
+    implementation 'com.pranavpandey.android:dynamic-utils:4.4.4'
     implementation 'org.greenrobot:eventbus:3.3.1'
-    implementation 'com.intuit.sdp:sdp-android:1.0.6'
-    implementation 'com.intuit.ssp:ssp-android:1.0.6'
+    implementation 'com.intuit.sdp:sdp-android:1.1.0'
+    implementation 'com.intuit.ssp:ssp-android:1.1.0'
     implementation 'me.zhanghai.android.fastscroll:library:1.1.8'
 
     // Simple Stack for Fragment Navigation

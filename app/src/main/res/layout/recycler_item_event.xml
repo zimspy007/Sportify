@@ -26,7 +26,7 @@
         android:fontFamily="@font/sfpro_medium"
         android:text="@string/app_name"
         android:textColor="@color/textColorPrimary"
-        android:textSize="@dimen/_18ssp"
+        android:textSize="@dimen/_16ssp"
         app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toTopOf="parent" />
 

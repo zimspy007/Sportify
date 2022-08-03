@@ -7,6 +7,7 @@ import androidx.multidex.MultiDex
 import com.bumptech.glide.Glide
 import com.bumptech.glide.MemoryCategory
 import com.pranavpandey.android.dynamic.toasts.DynamicToast
+import com.vanlee.sportify.database.objectbox.ObjectBox
 import com.vanlee.sportify.scheduler.BackgroundScheduler
 import com.zhuinden.simplestack.GlobalServices
 import com.zhuinden.simplestackextensions.servicesktx.add
@@ -72,6 +73,8 @@ class CustomApplication : Application() {
             ) // Custom icon for warning toast. Pass `null` to use default icon.
             .setToastBackground(null) // Custom background drawable for all the toasts. Pass `null` to use default background.
             .apply()
+
+        ObjectBox.init(applicationContext())
     }
 
     override fun attachBaseContext(base: Context?) {

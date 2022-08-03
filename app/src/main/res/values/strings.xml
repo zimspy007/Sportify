@@ -4,4 +4,7 @@
     <string name="events">Events</string>
     <string name="schedule">Schedule</string>
     <string name="show_icon">Show icon</string>
+
+    <string name="connection_error">Error connecting to Sportify</string>
+    <string name="processing">Processing ...</string>
 </resources>

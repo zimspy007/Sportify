@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:9107040260143464622",
-      "lastPropertyId": "9:5859382980632150405",
+      "lastPropertyId": "6:7360647922267503701",
       "name": "DbEventItem",
       "properties": [
         {
@@ -37,21 +37,6 @@
         {
           "id": "6:7360647922267503701",
           "name": "formattedTime",
-          "type": 9
-        },
-        {
-          "id": "7:5395797157677943930",
-          "name": "idRow",
-          "type": 5
-        },
-        {
-          "id": "8:8503594766717220079",
-          "name": "imageUrl",
-          "type": 9
-        },
-        {
-          "id": "9:5859382980632150405",
-          "name": "videoUrl",
           "type": 9
         }
       ],
