@@ -14,7 +14,7 @@ import com.vanlee.sportify.utils.DateUtils.Companion.convertedDateToLocalTime
 
 class SchedulesAdapter(
     private var context: Context,
-    private var events: List<DbScheduleItem>
+    private var schedules: List<DbScheduleItem>
 ) :
     RecyclerView.Adapter<SchedulesAdapter.ViewHolder>() {
 
@@ -29,7 +29,7 @@ class SchedulesAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
-            with(events[position]) {
+            with(schedules[position]) {
                 Glide.with(context)
                     .load(this.imageUrl)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -52,9 +52,10 @@ class SchedulesAdapter(
         }
     }
 
-    override fun getItemCount() = events.size
+    override fun getItemCount() = schedules.size
 
-    companion object {
-        private val TAG = SchedulesAdapter::class.java.simpleName
+    override fun getItemId(position: Int): Long {
+        val scheduleItem = schedules[position]
+        return scheduleItem.id
     }
 }

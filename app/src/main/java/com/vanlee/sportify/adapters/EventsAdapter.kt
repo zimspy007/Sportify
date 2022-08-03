@@ -82,7 +82,8 @@ class EventsAdapter(
 
     override fun getItemCount() = events.size
 
-    companion object {
-        private val TAG = EventsAdapter::class.java.simpleName
+    override fun getItemId(position: Int): Long {
+        val eventItem = events[position]
+        return eventItem.id
     }
 }

@@ -23,10 +23,14 @@ class ScheduleFragment : KeyedFragment(R.layout.fragment_recycler_view) {
 
         val model = ViewModelProvider(this)[SchedulesViewModel::class.java]
         model.getSchedules().observe(viewLifecycleOwner) { schedules ->
-            binding.recyclerView.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                adapter = SchedulesAdapter(requireContext(), schedules)
-            }
+            val layoutManager = LinearLayoutManager(requireContext())
+            val adapter = SchedulesAdapter(requireContext(), schedules)
+
+            adapter.setHasStableIds(true)
+
+            binding.recyclerView.layoutManager = layoutManager
+            binding.recyclerView.adapter = adapter
+
         }
         model.loadSchedules()
     }

@@ -23,10 +23,14 @@ class EventsFragment : KeyedFragment(R.layout.fragment_recycler_view) {
 
         val model = ViewModelProvider(this)[EventsViewModel::class.java]
         model.getEvents().observe(viewLifecycleOwner) { events ->
-            binding.recyclerView.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                adapter = EventsAdapter(requireContext(), events)
-            }
+            val layoutManager = LinearLayoutManager(requireContext())
+            val adapter = EventsAdapter(requireContext(), events)
+
+            adapter.setHasStableIds(true)
+
+            binding.recyclerView.layoutManager = layoutManager
+            binding.recyclerView.adapter = adapter
+
         }
         model.loadEvents()
     }
