@@ -6,5 +6,9 @@
     <string name="show_icon">Show icon</string>
 
     <string name="connection_error">Error connecting to Sportify</string>
-    <string name="processing">Processing ...</string>
+    <string name="processing">Processing …</string>
+
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="yesterday">Yesterday</string>
 </resources>

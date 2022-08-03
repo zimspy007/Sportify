@@ -8,6 +8,7 @@ import com.vanlee.sportify.database.objectbox.entities.DbEventItem
 import com.vanlee.sportify.database.objectbox.entities.DbScheduleItem
 import com.vanlee.sportify.entities.HttpResponse
 import com.vanlee.sportify.utils.DateUtils.Companion.formatTo
+import com.vanlee.sportify.utils.DateUtils.Companion.isTomorrow
 import com.vanlee.sportify.utils.DateUtils.Companion.toDate
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -17,9 +18,9 @@ import org.json.JSONArray
 class NetworkRequests {
 
     companion object {
-        private val TAG = NetworkRequests::class.java.simpleName
-        private val EVENTS_HTTP_TAG = "EVENTS_HTTP_TAG"
-        private val SCHEDULE_HTTP_TAG = "SCHEDULE_HTTP_TAG"
+        val TAG: String = NetworkRequests::class.java.simpleName
+        const val EVENTS_HTTP_TAG = "EVENTS_HTTP_TAG"
+        const val SCHEDULE_HTTP_TAG = "SCHEDULE_HTTP_TAG"
 
         /**
          * Get events from API
@@ -44,6 +45,7 @@ class NetworkRequests {
 
                     if (jsonArray != null) {
                         val eventsBox = ObjectBox.store.boxFor(DbEventItem::class.java)
+                        eventsBox.removeAll()
 
                         for (index in 0 until jsonArray.length()) {
                             val jsonObject = jsonArray.getJSONObject(index)
@@ -69,7 +71,9 @@ class NetworkRequests {
                                 formattedTime
                             )
 
-                            eventsBox.put(eventItem)
+                            if (!eventsBox.all.contains(eventItem)) {
+                                eventsBox.put(eventItem)
+                            }
                         }
 
                         return HttpResponse(true, null)
@@ -106,6 +110,7 @@ class NetworkRequests {
 
                     if (jsonArray != null) {
                         val schedulesBox = ObjectBox.store.boxFor(DbScheduleItem::class.java)
+                        schedulesBox.removeAll()
 
                         for (index in 0 until jsonArray.length()) {
                             val jsonObject = jsonArray.getJSONObject(index)
@@ -129,7 +134,9 @@ class NetworkRequests {
                                 formattedTime
                             )
 
-                            schedulesBox.put(scheduleItem)
+                            if (!schedulesBox.all.contains(scheduleItem) && isTomorrow(rawTime)) {
+                                schedulesBox.put(scheduleItem)
+                            }
                         }
 
                         return HttpResponse(true, null)

@@ -83,11 +83,6 @@
           "type": 9
         },
         {
-          "id": "5:5736979655466432918",
-          "name": "videoUrl",
-          "type": 9
-        },
-        {
           "id": "6:2137773151373216275",
           "name": "rawTime",
           "type": 9
@@ -120,7 +115,9 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    5736979655466432918
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

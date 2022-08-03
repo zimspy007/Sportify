@@ -11,6 +11,9 @@ import com.vanlee.sportify.fragments.keys.BaseKey
 import com.vanlee.sportify.fragments.keys.EventsFragmentKey
 import com.vanlee.sportify.fragments.keys.ScheduleFragmentKey
 import com.vanlee.sportify.network.NetworkRequests
+import com.vanlee.sportify.network.NetworkRequests.Companion.EVENTS_HTTP_TAG
+import com.vanlee.sportify.network.NetworkRequests.Companion.SCHEDULE_HTTP_TAG
+import com.vanlee.sportify.network.NetworkRequests.Companion.cancelCallWithTag
 import com.zhuinden.simplestack.History
 import com.zhuinden.simplestack.SimpleStateChanger
 import com.zhuinden.simplestack.StateChange
@@ -72,6 +75,11 @@ class MainActivity : AppCompatActivity(), SimpleStateChanger.NavigationHandler {
 
     override fun onBackPressed() {
         if (!backstack.goBack()) {
+
+            // Cancel http requests
+            cancelCallWithTag(client, EVENTS_HTTP_TAG)
+            cancelCallWithTag(client, SCHEDULE_HTTP_TAG)
+
             super.onBackPressed()
         }
     }
