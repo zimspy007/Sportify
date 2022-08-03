@@ -16,7 +16,6 @@ import com.vanlee.sportify.network.NetworkRequests
 import com.vanlee.sportify.network.NetworkRequests.Companion.EVENTS_HTTP_TAG
 import com.vanlee.sportify.network.NetworkRequests.Companion.SCHEDULE_HTTP_TAG
 import com.vanlee.sportify.network.NetworkRequests.Companion.cancelCallWithTag
-import com.vanlee.sportify.viewmodel.EventsViewModel
 import com.zhuinden.simplestack.History
 import com.zhuinden.simplestack.SimpleStateChanger
 import com.zhuinden.simplestack.StateChange
@@ -24,14 +23,8 @@ import com.zhuinden.simplestack.navigator.Navigator
 import com.zhuinden.simplestackextensions.fragments.DefaultFragmentStateChanger
 import com.zhuinden.simplestackextensions.navigatorktx.backstack
 import com.zhuinden.simplestackextensions.services.DefaultServiceProvider
-import kotlinx.coroutines.delay
 import okhttp3.OkHttpClient
 import java.util.*
-import java.util.concurrent.Executors
-import java.util.concurrent.Executors.callable
-import java.util.concurrent.ScheduledExecutorService
-import java.util.concurrent.ScheduledFuture
-import java.util.concurrent.TimeUnit
 import kotlin.concurrent.fixedRateTimer
 
 
