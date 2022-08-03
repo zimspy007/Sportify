@@ -11,7 +11,7 @@ import java.util.*
 class DateUtils {
 
     companion object {
-        val TAG = DateUtils::class.java.simpleName
+        val TAG: String = DateUtils::class.java.simpleName
 
         fun convertedDateToLocalTime(dateStr: String?): Calendar? {
             val sdf = SimpleDateFormat(
