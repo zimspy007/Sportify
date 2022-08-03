@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vanlee.sportify.database.objectbox.ObjectBox
 import com.vanlee.sportify.database.objectbox.entities.DbEventItem
+import com.vanlee.sportify.database.objectbox.entities.DbEventItem_
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -23,8 +24,12 @@ class EventsViewModel : ViewModel() {
 
     private suspend fun doLoadEvents() {
         withContext(Dispatchers.IO) {
-            val eventsList = ObjectBox.store.boxFor(DbEventItem::class.java).all
-            events.postValue(eventsList)
+            val query = ObjectBox.store.boxFor(DbEventItem::class.java)
+                .query()
+                .order(DbEventItem_.rawTime)
+                .build()
+
+            events.postValue(query.find())
         }
     }
 

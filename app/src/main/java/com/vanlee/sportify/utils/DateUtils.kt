@@ -1,15 +1,11 @@
 package com.vanlee.sportify.utils
 
-import android.content.res.Resources
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.icu.util.TimeZone
-import com.vanlee.sportify.R
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZonedDateTime
-import java.time.temporal.ChronoUnit
 import java.util.*
 
 class DateUtils {

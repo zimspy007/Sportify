@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vanlee.sportify.database.objectbox.ObjectBox
 import com.vanlee.sportify.database.objectbox.entities.DbScheduleItem
+import com.vanlee.sportify.database.objectbox.entities.DbScheduleItem_
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -23,8 +24,12 @@ class SchedulesViewModel : ViewModel() {
 
     private suspend fun doLoadSchedules() {
         withContext(Dispatchers.IO) {
-            val schedulesList = ObjectBox.store.boxFor(DbScheduleItem::class.java).all
-            events.postValue(schedulesList)
+            val query = ObjectBox.store.boxFor(DbScheduleItem::class.java)
+                .query()
+                .order(DbScheduleItem_.rawTime)
+                .build()
+
+            events.postValue(query.find())
         }
     }
 
