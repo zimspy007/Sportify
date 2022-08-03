@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(), SimpleStateChanger.NavigationHandler {
         // This is bad system design. Instead, of using a timer, the server
         // should provide a sync system that pushes notifications to users
         // via FCM. This will lessen server load with these unneeded network requests.
-        fixedRateTimer("Schedule updated", true, 0L, 30 * 1000) {
+        fixedRateTimer("Schedule updated", true, 0L, (0.5 * (60*1000)).toLong()) {
                 schedulesHttpResponse = NetworkRequests.getSchedules(client)
         }
 
