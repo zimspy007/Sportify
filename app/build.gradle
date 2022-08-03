@@ -84,6 +84,7 @@ dependencies {
     kapt "io.objectbox:objectbox-processor:3.1.2"
 
     // third party libraries
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     implementation 'com.github.bumptech.glide:glide:4.13.2'
     kapt 'com.github.bumptech.glide:compiler:4.13.2'
     implementation 'com.pranavpandey.android:dynamic-toasts:4.1.0'

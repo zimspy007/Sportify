@@ -3,6 +3,7 @@ package com.vanlee.sportify.activities
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.vanlee.sportify.CustomApplication
 import com.vanlee.sportify.R
 import com.vanlee.sportify.databinding.ActivityMainBinding
 import com.vanlee.sportify.fragments.keys.BaseKey
@@ -14,6 +15,7 @@ import com.zhuinden.simplestack.StateChange
 import com.zhuinden.simplestack.navigator.Navigator
 import com.zhuinden.simplestackextensions.fragments.DefaultFragmentStateChanger
 import com.zhuinden.simplestackextensions.navigatorktx.backstack
+import com.zhuinden.simplestackextensions.services.DefaultServiceProvider
 
 class MainActivity : AppCompatActivity(), SimpleStateChanger.NavigationHandler {
 
@@ -23,9 +25,11 @@ class MainActivity : AppCompatActivity(), SimpleStateChanger.NavigationHandler {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val app = application as CustomApplication
+        val globalServices = app.globalServices
 
         binding.navigation.setOnItemSelectedListener { item ->
             val destination = when (item.itemId) {
@@ -44,6 +48,8 @@ class MainActivity : AppCompatActivity(), SimpleStateChanger.NavigationHandler {
 
         Navigator.configure()
             .setStateChanger(SimpleStateChanger(this))
+            .setGlobalServices(globalServices)
+            .setScopedServices(DefaultServiceProvider())
             .install(this, binding.container, History.single(EventsFragmentKey()))
     }
 
