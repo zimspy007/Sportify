@@ -10,9 +10,13 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vanlee.sportify.R
 import com.vanlee.sportify.database.objectbox.entities.DbEventItem
 import com.vanlee.sportify.databinding.RecyclerItemEventBinding
+import com.vanlee.sportify.fragments.keys.VideoPlayerFragmentKey
 import com.vanlee.sportify.utils.DateUtils.Companion.convertedDateToLocalTime
 import com.vanlee.sportify.utils.DateUtils.Companion.isTomorrow
 import com.vanlee.sportify.utils.DateUtils.Companion.isYesterday
+import com.zhuinden.simplestack.History
+import com.zhuinden.simplestack.StateChange
+import com.zhuinden.simplestack.navigator.Navigator
 
 
 class EventsAdapter(
@@ -75,6 +79,13 @@ class EventsAdapter(
                 } else {
                     val dateTime = this.formattedDate + ", " + this.formattedTime
                     binding.time.text = dateTime
+                }
+
+                binding.root.setOnClickListener {
+                    Navigator.getBackstack(context).setHistory(
+                        History.of(VideoPlayerFragmentKey(this.id)),
+                        StateChange.FORWARD
+                    )
                 }
             }
         }
