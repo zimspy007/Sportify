@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity(), SimpleStateChanger.NavigationHandler {
             }
 
             destination?.let { key ->
-                backstack.replaceTop(key, StateChange.FORWARD)
+                backstack.replaceTop(key, StateChange.REPLACE)
                 true
             } ?: false
         }
@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity(), SimpleStateChanger.NavigationHandler {
             .install(this, binding.container, History.single(EventsFragmentKey()))
 
         // Fetch data from server
+        // We need loading indicators for the network requests should they take too long
         Thread {
             eventsHttpResponse = NetworkRequests.getEvents(client)
             runOnUiThread {

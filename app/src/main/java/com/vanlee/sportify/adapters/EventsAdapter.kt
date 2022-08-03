@@ -14,8 +14,6 @@ import com.vanlee.sportify.fragments.keys.VideoPlayerFragmentKey
 import com.vanlee.sportify.utils.DateUtils.Companion.convertedDateToLocalTime
 import com.vanlee.sportify.utils.DateUtils.Companion.isTomorrow
 import com.vanlee.sportify.utils.DateUtils.Companion.isYesterday
-import com.zhuinden.simplestack.History
-import com.zhuinden.simplestack.StateChange
 import com.zhuinden.simplestack.navigator.Navigator
 
 
@@ -82,10 +80,7 @@ class EventsAdapter(
                 }
 
                 binding.root.setOnClickListener {
-                    Navigator.getBackstack(context).setHistory(
-                        History.of(VideoPlayerFragmentKey(this.id)),
-                        StateChange.FORWARD
-                    )
+                    Navigator.getBackstack(context).goTo(VideoPlayerFragmentKey(this.id))
                 }
             }
         }

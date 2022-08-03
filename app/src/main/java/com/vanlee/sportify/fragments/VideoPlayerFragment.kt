@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.vanlee.sportify.R
 import com.vanlee.sportify.databinding.FragmentVideoPlayerBinding
 import com.vanlee.sportify.viewmodel.EventViewModel
-import com.zhuinden.simplestack.navigator.Navigator
 import com.zhuinden.simplestackextensions.fragments.KeyedFragment
 import com.zhuinden.simplestackextensions.fragmentsktx.backstack
 
@@ -19,6 +18,8 @@ class VideoPlayerFragment(private val eventId: Long) :
 
     private var _binding: FragmentVideoPlayerBinding? = null
     private val binding get() = _binding!!
+
+    private var mediaController: MediaController? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,15 +33,16 @@ class VideoPlayerFragment(private val eventId: Long) :
         val model = ViewModelProvider(this)[EventViewModel::class.java]
         model.getEvent(eventId).observe(viewLifecycleOwner) { event ->
 
+            binding.title.text = event.title
+
             val uri: Uri = Uri.parse(event.videoUrl)
 
             binding.videoView.setVideoURI(uri)
 
-            val mediaController = MediaController(requireContext())
+            mediaController = MediaController(requireContext())
 
-            mediaController.setAnchorView(binding.videoView)
-
-            mediaController.setMediaPlayer(binding.videoView)
+            mediaController!!.setAnchorView(binding.videoView)
+            mediaController!!.setMediaPlayer(binding.videoView)
 
             binding.videoView.setMediaController(mediaController)
 
@@ -48,6 +50,17 @@ class VideoPlayerFragment(private val eventId: Long) :
 
         }
         model.loadEvent(eventId)
+    }
+
+    override fun onStop() {
+        if (binding.videoView.isPlaying)
+            binding.videoView.stopPlayback()
+
+        if (mediaController != null) {
+            mediaController = null
+        }
+
+        super.onStop()
     }
 
     override fun onDestroy() {
