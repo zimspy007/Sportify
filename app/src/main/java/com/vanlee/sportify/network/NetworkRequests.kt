@@ -40,6 +40,8 @@ class NetworkRequests {
                         Resources.getSystem().getString(R.string.connection_error)
                     )
                 } else {
+                    Log.i(TAG, "Schedule updated")
+
                     val responseString = response.body?.string()
                     val jsonArray = responseString?.let { JSONArray(it) }
 

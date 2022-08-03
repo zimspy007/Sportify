@@ -22,6 +22,8 @@ import com.zhuinden.simplestackextensions.fragments.DefaultFragmentStateChanger
 import com.zhuinden.simplestackextensions.navigatorktx.backstack
 import com.zhuinden.simplestackextensions.services.DefaultServiceProvider
 import okhttp3.OkHttpClient
+import java.util.*
+import kotlin.concurrent.fixedRateTimer
 
 
 class MainActivity : AppCompatActivity(), SimpleStateChanger.NavigationHandler {
@@ -67,9 +69,17 @@ class MainActivity : AppCompatActivity(), SimpleStateChanger.NavigationHandler {
         // Fetch data from server
         Thread {
             eventsHttpResponse = NetworkRequests.getEvents(client)
-            schedulesHttpResponse = NetworkRequests.getSchedules(client)
             runOnUiThread { }
         }.start()
+
+        // This is bad system design. Instead, of using a timer, the server
+        // should provide a sync system that pushes notifications to users
+        // via FCM. This will lessen server load with these unneeded network requests.
+        fixedRateTimer("Schedule updated", false, 0L, 30 * 1000) {
+            run {
+                schedulesHttpResponse = NetworkRequests.getSchedules(client)
+            }
+        }
 
     }
 
