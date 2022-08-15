@@ -1,5 +1,6 @@
 package com.vanlee.sportify.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,10 +32,16 @@ class EventViewModel : ViewModel() {
         withContext(Dispatchers.IO) {
             val eventsBox = ObjectBox.store.boxFor(DbEventItem::class.java)
 
-            val query: Query<DbEventItem> = eventsBox.query().equal(DbEventItem_.id, eventId).order(DbEventItem_.rawTime).build()
+            val query: Query<DbEventItem> =
+                eventsBox.query().equal(DbEventItem_.id, eventId).order(DbEventItem_.rawTime)
+                    .build()
 
             subscription = query.subscribe()
                 .on(AndroidScheduler.mainThread())
+                .onError {
+                    Log.e(SchedulesViewModel.TAG, it.message!!)
+                    event.postValue(null)
+                }
                 .observer { data -> event.postValue(data.first()) }
         }
     }

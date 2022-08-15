@@ -3,6 +3,7 @@
 
     <string name="events">Events</string>
     <string name="schedule">Schedule</string>
+    <string name="schedules">Schedules</string>
     <string name="show_icon">Show icon</string>
 
     <string name="connection_error">Error connecting to Sportify</string>
@@ -12,4 +13,8 @@
     <string name="tomorrow">Tomorrow</string>
     <string name="yesterday">Yesterday</string>
     <string name="watch_event">Watch Event</string>
+
+    <string name="error_loading_schedules">Error loading schedules</string>
+    <string name="error_loading_events">Error loading events</string>
+    <string name="error_loading_event">Error loading event</string>
 </resources>

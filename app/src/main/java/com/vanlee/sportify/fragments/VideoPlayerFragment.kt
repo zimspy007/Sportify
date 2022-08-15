@@ -6,14 +6,16 @@ import android.view.View
 import android.widget.MediaController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import com.vanlee.sportify.R
 import com.vanlee.sportify.databinding.FragmentVideoPlayerBinding
+import com.vanlee.sportify.fragments.keys.VideoPlayerFragmentKey
 import com.vanlee.sportify.viewmodel.EventViewModel
 import com.zhuinden.simplestackextensions.fragments.KeyedFragment
 import com.zhuinden.simplestackextensions.fragmentsktx.backstack
 
 
-class VideoPlayerFragment(private val eventId: Long) :
+class VideoPlayerFragment :
     KeyedFragment(R.layout.fragment_video_player) {
 
     private var _binding: FragmentVideoPlayerBinding? = null
@@ -21,9 +23,14 @@ class VideoPlayerFragment(private val eventId: Long) :
 
     private var mediaController: MediaController? = null
 
+    private var eventId: Long = 0
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentVideoPlayerBinding.bind(view)
+
+        val key = getKey<VideoPlayerFragmentKey>()
+        eventId = key.eventId
 
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
         binding.toolbar.setNavigationOnClickListener {
@@ -32,6 +39,11 @@ class VideoPlayerFragment(private val eventId: Long) :
 
         val model = ViewModelProvider(this)[EventViewModel::class.java]
         model.getEvent(eventId).observe(viewLifecycleOwner) { event ->
+
+            if (event == null) {
+                DynamicToast.makeError(requireContext(), getString(R.string.error_loading_event))
+                backstack.goBack()
+            }
 
             binding.title.text = event.title
 

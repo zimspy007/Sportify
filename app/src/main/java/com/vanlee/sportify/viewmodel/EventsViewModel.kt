@@ -1,5 +1,6 @@
 package com.vanlee.sportify.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -36,6 +37,10 @@ class EventsViewModel : ViewModel() {
 
             subscription = query.subscribe()
                 .on(AndroidScheduler.mainThread())
+                .onError {
+                    Log.e(SchedulesViewModel.TAG, it.message!!)
+                    events.postValue(null)
+                }
                 .observer { data -> events.postValue(data) }
         }
     }
